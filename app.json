@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "CGF Access",
+    "slug": "cgf-access-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./app.jpg",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./app.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a2332"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cgf.access"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app.jpg",
+        "backgroundColor": "#1a2332"
+      },
+      "package": "com.cgf.access"
+    },
+    "web": {
+      "favicon": "./app.jpg"
+    }
+  }
+}
+
