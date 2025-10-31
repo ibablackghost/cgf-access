@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,36 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import DrawerMenu from '../components/DrawerMenu';
 
-const DashboardScreen: React.FC = () => {
+interface DashboardScreenProps {
+  onLogout?: () => void;
+}
+
+const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout }) => {
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const handleLogout = () => {
+    setMenuVisible(false);
+    if (onLogout) {
+      onLogout();
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <DrawerMenu 
+        visible={menuVisible}
+        onClose={() => setMenuVisible(false)}
+        onLogout={handleLogout}
+      />
+
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.headerIcon}>
+        <TouchableOpacity 
+          style={styles.headerIcon}
+          onPress={() => setMenuVisible(true)}
+        >
           <Ionicons name="menu" size={22} color="#1a1a1a" />
         </TouchableOpacity>
 

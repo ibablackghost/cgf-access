@@ -55,16 +55,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         >
           {/* Logo Section */}
           <View style={styles.logoContainer}>
-            <View style={styles.logoBox}>
-              <Text style={styles.logoTextCGF}>CGF</Text>
-              <View style={styles.arrowContainer}>
-                <Text style={styles.arrowText}>↗</Text>
-              </View>
-            </View>
-            <View style={styles.accessContainer}>
-              <Text style={styles.accessLetter}>A</Text>
-              <Text style={styles.logoTextAccess}>ccess</Text>
-            </View>
+            <Image 
+              source={require('../app.jpg')} 
+              style={styles.logo}
+              resizeMode="contain"
+            />
             <Text style={styles.tagline}>Votre partenaire bourse</Text>
           </View>
 
@@ -155,129 +150,104 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingHorizontal: 24,
-    paddingTop: 60,
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    paddingTop: 40,
     paddingBottom: 30,
   },
   
   // Logo Styles
   logoContainer: {
     alignItems: 'center',
-    marginBottom: 50,
+    marginBottom: 40,
   },
-  logoBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  logoTextCGF: {
-    fontSize: 56,
-    fontWeight: 'bold',
-    color: '#5BA3D9',
-    letterSpacing: 4,
-  },
-  arrowContainer: {
-    marginLeft: 4,
-    marginBottom: 8,
-  },
-  arrowText: {
-    fontSize: 48,
-    color: '#ffffff',
-    fontWeight: 'bold',
-  },
-  accessContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  accessLetter: {
-    fontSize: 44,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    letterSpacing: 1,
-  },
-  logoTextAccess: {
-    fontSize: 44,
-    fontWeight: '600',
-    color: '#5BA3D9',
-    letterSpacing: 1,
+  logo: {
+    width: 140,
+    height: 140,
+    marginBottom: 12,
   },
   tagline: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#7a8b9e',
-    marginTop: 12,
+    marginTop: 8,
     fontStyle: 'italic',
   },
 
   // Welcome Section
   welcomeContainer: {
-    marginBottom: 40,
+    marginBottom: 32,
+    alignItems: 'center',
   },
   welcomeTitle: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#ffffff',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   welcomeSubtitle: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#7a8b9e',
-    lineHeight: 24,
+    lineHeight: 20,
+    textAlign: 'center',
   },
 
   // Form Styles
   formContainer: {
-    marginBottom: 24,
+    marginBottom: 20,
+    maxWidth: 400,
+    width: '100%',
+    alignSelf: 'center',
   },
   inputContainer: {
-    marginBottom: 24,
+    marginBottom: 20,
   },
   inputLabel: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
     color: '#ffffff',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   input: {
     backgroundColor: '#253447',
-    borderRadius: 12,
-    paddingHorizontal: 18,
-    paddingVertical: 16,
-    fontSize: 16,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 15,
     color: '#ffffff',
     borderWidth: 1.5,
     borderColor: '#2f3f54',
   },
   loginButton: {
-    borderRadius: 12,
-    marginTop: 12,
+    borderRadius: 10,
+    marginTop: 8,
     overflow: 'hidden',
     shadowColor: '#5BA3D9',
     shadowOffset: {
       width: 0,
-      height: 6,
+      height: 4,
     },
     shadowOpacity: 0.4,
-    shadowRadius: 10,
-    elevation: 10,
+    shadowRadius: 8,
+    elevation: 8,
   },
   loginButtonGradient: {
-    paddingVertical: 18,
+    paddingVertical: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   loginButtonText: {
     color: '#ffffff',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 'bold',
     letterSpacing: 0.5,
   },
   forgotPasswordContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 16,
   },
   forgotPasswordText: {
     color: '#5BA3D9',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
   },
 
@@ -287,18 +257,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 'auto',
-    paddingTop: 30,
-    borderTopWidth: 1,
-    borderTopColor: '#2f3f54',
+    paddingTop: 24,
   },
   signupText: {
     color: '#7a8b9e',
-    fontSize: 15,
+    fontSize: 14,
     marginRight: 6,
   },
   signupLink: {
     color: '#5BA3D9',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },

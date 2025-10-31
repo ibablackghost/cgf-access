@@ -10,10 +10,18 @@ export default function App() {
     setIsLoggedIn(true);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <>
       <StatusBar style={isLoggedIn ? "dark" : "light"} />
-      {isLoggedIn ? <DashboardScreen /> : <LoginScreen onLogin={handleLogin} />}
+      {isLoggedIn ? (
+        <DashboardScreen onLogout={handleLogout} />
+      ) : (
+        <LoginScreen onLogin={handleLogin} />
+      )}
     </>
   );
 }
