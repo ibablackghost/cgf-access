@@ -14,7 +14,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const LoginScreen: React.FC = () => {
+interface LoginScreenProps {
+  onLogin: () => void;
+}
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -22,9 +26,9 @@ const LoginScreen: React.FC = () => {
     console.log('Login:', username, password);
     // Ici tu pourras connecter avec ton backend
     if (username && password) {
-      Alert.alert('Connexion en cours...');
+      onLogin();
     } else {
-      Alert.alert('Veuillez remplir tous les champs');
+      Alert.alert('Erreur', 'Veuillez remplir tous les champs');
     }
   };
 
