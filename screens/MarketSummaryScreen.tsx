@@ -32,9 +32,10 @@ interface Stock {
 interface MarketSummaryScreenProps {
   onBack: () => void;
   onLogout?: () => void;
+  onNavigateToDashboard?: () => void;
 }
 
-const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLogout }) => {
+const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLogout, onNavigateToDashboard }) => {
   // Données facultatives pour affichage
   const mockDataActions: Stock[] = [
     { Nom: "AIR LIQUIDE CI", Symbol: "SIVC", coursCloture: "700", coursOuverture: "700", coursVeille: "700", variationP: "0.00", volume: "3060000" },
@@ -54,8 +55,8 @@ const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLog
   ];
 
   const [category, setCategory] = useState<'actions' | 'obligations'>('actions');
-  const [stocks, setStocks] = useState<Stock[]>(mockDataActions);
-  const [loading, setLoading] = useState(false);
+  const [stocks, setStocks] = useState<Stock[]>([]);
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [categoryMenuVisible, setCategoryMenuVisible] = useState(false);
   const [drawerMenuVisible, setDrawerMenuVisible] = useState(false);
@@ -63,11 +64,7 @@ const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLog
   const handleCategoryChange = (newCategory: 'actions' | 'obligations') => {
     setCategory(newCategory);
     setCategoryMenuVisible(false);
-    if (newCategory === 'actions') {
-      setStocks(mockDataActions);
-    } else {
-      setStocks(mockDataObligations);
-    }
+    setLoading(true);
     // Appeler l'API correspondante
     fetchMarketData(newCategory);
   };
@@ -97,11 +94,21 @@ const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLog
         setStocks(data.obligations);
       } else {
         console.log('Format de données inattendu ou catégorie non trouvée');
-        // Garder les données mockées
+        // Utiliser les données mockées en cas d'échec
+        if (cat === 'actions') {
+          setStocks(mockDataActions);
+        } else {
+          setStocks(mockDataObligations);
+        }
       }
     } catch (error) {
       console.error('Erreur API:', error);
-      // Garder les données mockées
+      // Utiliser les données mockées en cas d'erreur
+      if (cat === 'actions') {
+        setStocks(mockDataActions);
+      } else {
+        setStocks(mockDataObligations);
+      }
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -150,6 +157,12 @@ const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLog
         onLogout={handleLogout}
         onNavigateToMarket={() => {
           setDrawerMenuVisible(false);
+        }}
+        onNavigateToDashboard={() => {
+          setDrawerMenuVisible(false);
+          if (onNavigateToDashboard) {
+            onNavigateToDashboard();
+          }
         }}
       />
 

@@ -40,13 +40,20 @@ export default function App() {
 
     switch (currentScreen) {
       case 'market-summary':
-        return <MarketSummaryScreen onBack={navigateToMarket} onLogout={handleLogout} />;
+        return (
+          <MarketSummaryScreen 
+            onBack={navigateToMarket} 
+            onLogout={handleLogout}
+            onNavigateToDashboard={navigateToDashboard}
+          />
+        );
       case 'market':
         return (
           <MarketScreen 
             onBack={navigateToDashboard} 
             onNavigateToSummary={navigateToMarketSummary}
             onLogout={handleLogout}
+            onNavigateToDashboard={navigateToDashboard}
           />
         );
       case 'dashboard':

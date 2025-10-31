@@ -15,9 +15,10 @@ interface MarketScreenProps {
   onBack: () => void;
   onNavigateToSummary?: () => void;
   onLogout?: () => void;
+  onNavigateToDashboard?: () => void;
 }
 
-const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary, onLogout }) => {
+const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary, onLogout, onNavigateToDashboard }) => {
   const [drawerMenuVisible, setDrawerMenuVisible] = useState(false);
 
   const handleLogout = () => {
@@ -77,6 +78,12 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary
         onLogout={handleLogout}
         onNavigateToMarket={() => {
           setDrawerMenuVisible(false);
+        }}
+        onNavigateToDashboard={() => {
+          setDrawerMenuVisible(false);
+          if (onNavigateToDashboard) {
+            onNavigateToDashboard();
+          }
         }}
       />
 

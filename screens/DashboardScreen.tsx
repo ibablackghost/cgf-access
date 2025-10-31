@@ -32,6 +32,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout, onNavigateT
         onClose={() => setMenuVisible(false)}
         onLogout={handleLogout}
         onNavigateToMarket={onNavigateToMarket}
+        onNavigateToDashboard={() => setMenuVisible(false)}
       />
 
       {/* Header */}

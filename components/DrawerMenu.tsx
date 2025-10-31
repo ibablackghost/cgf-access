@@ -20,9 +20,10 @@ interface DrawerMenuProps {
   onClose: () => void;
   onLogout: () => void;
   onNavigateToMarket?: () => void;
+  onNavigateToDashboard?: () => void;
 }
 
-const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout, onNavigateToMarket }) => {
+const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout, onNavigateToMarket, onNavigateToDashboard }) => {
   const slideAnim = useRef(new Animated.Value(-DRAWER_WIDTH)).current;
 
   useEffect(() => {
@@ -82,7 +83,15 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout, onN
 
             <ScrollView style={styles.menuContent}>
               {/* Accueil */}
-              <TouchableOpacity style={styles.menuItem} onPress={onClose}>
+              <TouchableOpacity 
+                style={styles.menuItem} 
+                onPress={() => {
+                  onClose();
+                  if (onNavigateToDashboard) {
+                    onNavigateToDashboard();
+                  }
+                }}
+              >
                 <Ionicons name="home" size={24} color="#ffffff" />
                 <Text style={styles.menuText}>Accueil</Text>
               </TouchableOpacity>
