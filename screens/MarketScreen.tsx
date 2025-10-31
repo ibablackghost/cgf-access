@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,12 +9,23 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import DrawerMenu from '../components/DrawerMenu';
 
 interface MarketScreenProps {
   onBack: () => void;
+  onNavigateToSummary?: () => void;
+  onLogout?: () => void;
 }
 
-const MarketScreen: React.FC<MarketScreenProps> = ({ onBack }) => {
+const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary, onLogout }) => {
+  const [drawerMenuVisible, setDrawerMenuVisible] = useState(false);
+
+  const handleLogout = () => {
+    setDrawerMenuVisible(false);
+    if (onLogout) {
+      onLogout();
+    }
+  };
   const marketSections = [
     {
       id: 1,
@@ -60,17 +71,38 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
+      <DrawerMenu 
+        visible={drawerMenuVisible}
+        onClose={() => setDrawerMenuVisible(false)}
+        onLogout={handleLogout}
+        onNavigateToMarket={() => {
+          setDrawerMenuVisible(false);
+        }}
+      />
+
+      {/* Header principal */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={onBack}>
-          <Ionicons name="arrow-back" size={24} color="#1a1a1a" />
+        <TouchableOpacity 
+          style={styles.headerIconBtn}
+          onPress={() => setDrawerMenuVisible(true)}
+        >
+          <Ionicons name="menu" size={22} color="#1a1a1a" />
         </TouchableOpacity>
+
+        <Text style={styles.logo}>CGF BOURSE</Text>
         
-        <Text style={styles.headerTitle}>Marché</Text>
-        
-        <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.headerIcon}>
-            <Ionicons name="search" size={22} color="#1a1a1a" />
+        <View style={styles.headerIcons}>
+          <TouchableOpacity style={styles.headerIconBtn}>
+            <Ionicons name="search" size={20} color="#1a1a1a" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.headerIconBtn}>
+            <Ionicons name="mail-outline" size={20} color="#1a1a1a" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.headerIconBtn}>
+            <Ionicons name="information-circle-outline" size={20} color="#1a1a1a" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.headerIconBtn}>
+            <Ionicons name="notifications-outline" size={20} color="#1a1a1a" />
           </TouchableOpacity>
         </View>
       </View>
@@ -79,6 +111,12 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack }) => {
       <View style={styles.accountContainer}>
         <Text style={styles.accountText}>Compte TITRES - LIBRE N° 0338631036</Text>
       </View>
+
+      {/* Retour Button */}
+      <TouchableOpacity style={styles.retourButton} onPress={onBack}>
+        <Ionicons name="arrow-back" size={20} color="#ffffff" />
+        <Text style={styles.retourText}>Retour</Text>
+      </TouchableOpacity>
 
       <ScrollView 
         style={styles.scrollView} 
@@ -90,6 +128,11 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack }) => {
             key={section.id}
             style={styles.cardWrapper}
             activeOpacity={0.7}
+            onPress={() => {
+              if (section.id === 1 && onNavigateToSummary) {
+                onNavigateToSummary();
+              }
+            }}
           >
             <LinearGradient
               colors={[...section.gradient]}
@@ -154,35 +197,44 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
   },
-  backButton: {
-    padding: 4,
+  headerIconBtn: {
+    padding: 6,
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
-    flex: 1,
-    textAlign: 'center',
-  },
-  headerRight: {
+  headerIcons: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 4,
   },
-  headerIcon: {
-    padding: 4,
+  logo: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2196F3',
+    letterSpacing: 0.5,
   },
   accountContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e3f2fd',
     paddingVertical: 10,
     paddingHorizontal: 16,
-    alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#90caf9',
   },
   accountText: {
     fontSize: 13,
     color: '#1a1a1a',
     fontWeight: '500',
+  },
+  retourButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0E2D5B',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    gap: 8,
+  },
+  retourText: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600',
   },
   scrollView: {
     flex: 1,

@@ -3,8 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import LoginScreen from './screens/LoginScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import MarketScreen from './screens/MarketScreen';
+import MarketSummaryScreen from './screens/MarketSummaryScreen';
 
-type Screen = 'login' | 'dashboard' | 'market';
+type Screen = 'login' | 'dashboard' | 'market' | 'market-summary';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,14 +29,26 @@ export default function App() {
     setCurrentScreen('dashboard');
   };
 
+  const navigateToMarketSummary = () => {
+    setCurrentScreen('market-summary');
+  };
+
   const renderScreen = () => {
     if (!isLoggedIn) {
       return <LoginScreen onLogin={handleLogin} />;
     }
 
     switch (currentScreen) {
+      case 'market-summary':
+        return <MarketSummaryScreen onBack={navigateToMarket} onLogout={handleLogout} />;
       case 'market':
-        return <MarketScreen onBack={navigateToDashboard} />;
+        return (
+          <MarketScreen 
+            onBack={navigateToDashboard} 
+            onNavigateToSummary={navigateToMarketSummary}
+            onLogout={handleLogout}
+          />
+        );
       case 'dashboard':
       default:
         return (
