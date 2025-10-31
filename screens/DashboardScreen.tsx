@@ -12,9 +12,10 @@ import DrawerMenu from '../components/DrawerMenu';
 
 interface DashboardScreenProps {
   onLogout?: () => void;
+  onNavigateToMarket?: () => void;
 }
 
-const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout }) => {
+const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout, onNavigateToMarket }) => {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handleLogout = () => {
@@ -30,6 +31,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout }) => {
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
         onLogout={handleLogout}
+        onNavigateToMarket={onNavigateToMarket}
       />
 
       {/* Header */}
@@ -95,7 +97,11 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout }) => {
         </View>
 
         {/* Marché Section */}
-        <View style={styles.card}>
+        <TouchableOpacity 
+          style={styles.card}
+          onPress={onNavigateToMarket}
+          activeOpacity={0.7}
+        >
           <View style={styles.cardHeader}>
             <View style={styles.iconContainer}>
               <MaterialCommunityIcons name="layers" size={24} color="#ffffff" />
@@ -112,9 +118,12 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout }) => {
               <Text style={styles.label}>Volume des transactions</Text>
               <Text style={styles.value}>1 466 568 067 FCFA</Text>
             </View>
-            <Text style={styles.closedText}>Fermé</Text>
+            <View style={styles.row}>
+              <Text style={styles.closedText}>Fermé</Text>
+              <Ionicons name="chevron-forward" size={20} color="#2196F3" />
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
         {/* Indices Section */}
         <View style={styles.card}>

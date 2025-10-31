@@ -19,9 +19,10 @@ interface DrawerMenuProps {
   visible: boolean;
   onClose: () => void;
   onLogout: () => void;
+  onNavigateToMarket?: () => void;
 }
 
-const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout }) => {
+const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout, onNavigateToMarket }) => {
   const slideAnim = useRef(new Animated.Value(-DRAWER_WIDTH)).current;
 
   useEffect(() => {
@@ -99,7 +100,15 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout }) =
               </TouchableOpacity>
 
               {/* Marché */}
-              <TouchableOpacity style={styles.menuItem}>
+              <TouchableOpacity 
+                style={styles.menuItem}
+                onPress={() => {
+                  onClose();
+                  if (onNavigateToMarket) {
+                    onNavigateToMarket();
+                  }
+                }}
+              >
                 <MaterialCommunityIcons name="layers" size={24} color="#ffffff" />
                 <Text style={styles.menuText}>Marché</Text>
               </TouchableOpacity>
