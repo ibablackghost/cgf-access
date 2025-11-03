@@ -21,9 +21,10 @@ interface PalmaresScreenProps {
   onBack: () => void;
   onLogout?: () => void;
   onNavigateToDashboard?: () => void;
+  onNavigateToAccount?: () => void;
 }
 
-const PalmaresScreen: React.FC<PalmaresScreenProps> = ({ onBack, onLogout, onNavigateToDashboard }) => {
+const PalmaresScreen: React.FC<PalmaresScreenProps> = ({ onBack, onLogout, onNavigateToDashboard, onNavigateToAccount }) => {
   // Données fictives
   const mockData: PalmaresItem[] = [
     { nom: "BERNABE COTE DIVOIRE", valeur: "BNBC", variation: 87.32 },
@@ -98,6 +99,12 @@ const PalmaresScreen: React.FC<PalmaresScreenProps> = ({ onBack, onLogout, onNav
           setDrawerMenuVisible(false);
           if (onNavigateToDashboard) {
             onNavigateToDashboard();
+          }
+        }}
+        onNavigateToAccount={() => {
+          setDrawerMenuVisible(false);
+          if (onNavigateToAccount) {
+            onNavigateToAccount();
           }
         }}
       />

@@ -13,9 +13,10 @@ import { styles } from '../styles/DashboardScreen.styles';
 interface DashboardScreenProps {
   onLogout?: () => void;
   onNavigateToMarket?: () => void;
+  onNavigateToAccount?: () => void;
 }
 
-const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout, onNavigateToMarket }) => {
+const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout, onNavigateToMarket, onNavigateToAccount }) => {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handleLogout = () => {
@@ -33,6 +34,12 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onLogout, onNavigateT
         onLogout={handleLogout}
         onNavigateToMarket={onNavigateToMarket}
         onNavigateToDashboard={() => setMenuVisible(false)}
+        onNavigateToAccount={() => {
+          setMenuVisible(false);
+          if (onNavigateToAccount) {
+            onNavigateToAccount();
+          }
+        }}
       />
 
       {/* Header */}

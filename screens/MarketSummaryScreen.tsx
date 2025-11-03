@@ -37,9 +37,10 @@ interface MarketSummaryScreenProps {
   onBack: () => void;
   onLogout?: () => void;
   onNavigateToDashboard?: () => void;
+  onNavigateToAccount?: () => void;
 }
 
-const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLogout, onNavigateToDashboard }) => {
+const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLogout, onNavigateToDashboard, onNavigateToAccount }) => {
   const [category, setCategory] = useState<'actions' | 'obligations' | 'indices'>('actions');
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [loading, setLoading] = useState(true);
@@ -152,6 +153,12 @@ const MarketSummaryScreen: React.FC<MarketSummaryScreenProps> = ({ onBack, onLog
           setDrawerMenuVisible(false);
           if (onNavigateToDashboard) {
             onNavigateToDashboard();
+          }
+        }}
+        onNavigateToAccount={() => {
+          setDrawerMenuVisible(false);
+          if (onNavigateToAccount) {
+            onNavigateToAccount();
           }
         }}
       />

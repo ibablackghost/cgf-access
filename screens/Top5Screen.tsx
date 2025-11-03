@@ -29,9 +29,10 @@ interface Top5ScreenProps {
   onBack: () => void;
   onLogout?: () => void;
   onNavigateToDashboard?: () => void;
+  onNavigateToAccount?: () => void;
 }
 
-const Top5Screen: React.FC<Top5ScreenProps> = ({ onBack, onLogout, onNavigateToDashboard }) => {
+const Top5Screen: React.FC<Top5ScreenProps> = ({ onBack, onLogout, onNavigateToDashboard, onNavigateToAccount }) => {
   const [hausses, setHausses] = useState<Top5Item[]>([]);
   const [baisses, setBaisses] = useState<Top5Item[]>([]);
   const [volumes, setVolumes] = useState<VolumeItem[]>([
@@ -117,6 +118,12 @@ const Top5Screen: React.FC<Top5ScreenProps> = ({ onBack, onLogout, onNavigateToD
           setDrawerMenuVisible(false);
           if (onNavigateToDashboard) {
             onNavigateToDashboard();
+          }
+        }}
+        onNavigateToAccount={() => {
+          setDrawerMenuVisible(false);
+          if (onNavigateToAccount) {
+            onNavigateToAccount();
           }
         }}
       />

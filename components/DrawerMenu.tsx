@@ -21,9 +21,10 @@ interface DrawerMenuProps {
   onLogout: () => void;
   onNavigateToMarket?: () => void;
   onNavigateToDashboard?: () => void;
+  onNavigateToAccount?: () => void;
 }
 
-const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout, onNavigateToMarket, onNavigateToDashboard }) => {
+const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout, onNavigateToMarket, onNavigateToDashboard, onNavigateToAccount }) => {
   const slideAnim = useRef(new Animated.Value(-DRAWER_WIDTH)).current;
 
   useEffect(() => {
@@ -103,7 +104,15 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ visible, onClose, onLogout, onN
               </TouchableOpacity>
 
               {/* Comptes */}
-              <TouchableOpacity style={styles.menuItem}>
+              <TouchableOpacity 
+                style={styles.menuItem}
+                onPress={() => {
+                  onClose();
+                  if (onNavigateToAccount) {
+                    onNavigateToAccount();
+                  }
+                }}
+              >
                 <Ionicons name="card" size={24} color="#ffffff" />
                 <Text style={styles.menuText}>Comptes</Text>
               </TouchableOpacity>

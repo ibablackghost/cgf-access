@@ -9,21 +9,25 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import DrawerMenu from '../components/DrawerMenu';
-import { styles } from '../styles/MarketScreen.styles';
+import { styles } from '../styles/AccountScreen.styles';
 
-interface MarketScreenProps {
+interface AccountScreenProps {
   onBack: () => void;
-  onNavigateToSummary?: () => void;
-  onNavigateToTop5?: () => void;
-  onNavigateToPalmares?: () => void;
-  onNavigateToExceptionalExchanges?: () => void;
-  onNavigateToTicker?: () => void;
   onLogout?: () => void;
   onNavigateToDashboard?: () => void;
-  onNavigateToAccount?: () => void;
+  onNavigateToPortfolio?: () => void;
+  onNavigateToStatement?: () => void;
+  onNavigateToOrders?: () => void;
 }
 
-const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary, onNavigateToTop5, onNavigateToPalmares, onNavigateToExceptionalExchanges, onNavigateToTicker, onLogout, onNavigateToDashboard, onNavigateToAccount }) => {
+const AccountScreen: React.FC<AccountScreenProps> = ({ 
+  onBack, 
+  onLogout, 
+  onNavigateToDashboard,
+  onNavigateToPortfolio,
+  onNavigateToStatement,
+  onNavigateToOrders,
+}) => {
   const [drawerMenuVisible, setDrawerMenuVisible] = useState(false);
 
   const handleLogout = () => {
@@ -32,48 +36,30 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary
       onLogout();
     }
   };
-  const marketSections = [
+
+  const accountOptions = [
     {
       id: 1,
-      title: 'Résumé du marché',
-      icon: 'layers',
-      iconType: 'material',
-      gradient: ['#2E6DA4', '#0E2D5B'] as const,
-      description: 'Vue d\'ensemble du marché boursier',
+      title: 'Portefeuille',
+      icon: 'briefcase',
+      iconType: 'ionicons' as const,
+      onPress: onNavigateToPortfolio,
     },
     {
       id: 2,
-      title: 'Top 5',
-      icon: 'trending-up',
-      iconType: 'ionicons',
-      gradient: ['#2E6DA4', '#0E2D5B'] as const,
-      description: 'Les 5 meilleures performances',
+      title: 'Relevé',
+      icon: 'document-text',
+      iconType: 'ionicons' as const,
+      onPress: onNavigateToStatement,
     },
     {
       id: 3,
-      title: 'Palmarès',
-      icon: 'bar-chart',
-      iconType: 'ionicons',
-      gradient: ['#2E6DA4', '#0E2D5B'] as const,
-      description: 'Classement complet des actions',
-    },
-    {
-      id: 4,
-      title: 'Echanges exceptionnels',
+      title: 'Ordres de bourse',
       icon: 'swap-horizontal',
-      iconType: 'ionicons',
-      gradient: ['#2E6DA4', '#0E2D5B'] as const,
-      description: 'Volumes d\'échange inhabituels',
+      iconType: 'ionicons' as const,
+      onPress: onNavigateToOrders,
     },
-    {
-      id: 5,
-      title: 'Ticker',
-      icon: 'time',
-      iconType: 'ionicons',
-      gradient: ['#2E6DA4', '#0E2D5B'] as const,
-      description: 'Cotations en temps réel',
-    },
-  ] as const;
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -90,12 +76,7 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary
             onNavigateToDashboard();
           }
         }}
-        onNavigateToAccount={() => {
-          setDrawerMenuVisible(false);
-          if (onNavigateToAccount) {
-            onNavigateToAccount();
-          }
-        }}
+        onNavigateToAccount={() => setDrawerMenuVisible(false)}
       />
 
       {/* Header principal */}
@@ -136,56 +117,32 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary
         <Text style={styles.retourText}>Retour</Text>
       </TouchableOpacity>
 
+      {/* Main Content */}
       <ScrollView 
-        style={styles.scrollView} 
-        showsVerticalScrollIndicator={false}
+        style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
-        {marketSections.map((section, index) => (
+        {accountOptions.map((option) => (
           <TouchableOpacity
-            key={section.id}
+            key={option.id}
             style={styles.cardWrapper}
+            onPress={option.onPress}
             activeOpacity={0.7}
-            onPress={() => {
-              if (section.id === 1 && onNavigateToSummary) {
-                onNavigateToSummary();
-              } else if (section.id === 2 && onNavigateToTop5) {
-                onNavigateToTop5();
-              } else if (section.id === 3 && onNavigateToPalmares) {
-                onNavigateToPalmares();
-              } else if (section.id === 4 && onNavigateToExceptionalExchanges) {
-                onNavigateToExceptionalExchanges();
-              } else if (section.id === 5 && onNavigateToTicker) {
-                onNavigateToTicker();
-              }
-            }}
           >
             <LinearGradient
-              colors={[...section.gradient]}
+              colors={['#2E6DA4', '#0E2D5B']}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={styles.cardGradient}
             >
               <View style={styles.cardContent}>
                 <View style={styles.iconContainer}>
-                  {section.iconType === 'material' ? (
-                    <MaterialCommunityIcons 
-                      name={section.icon as any} 
-                      size={40} 
-                      color="#ffffff" 
-                    />
-                  ) : (
-                    <Ionicons 
-                      name={section.icon as any} 
-                      size={40} 
-                      color="#ffffff" 
-                    />
-                  )}
+                  <Ionicons name={option.icon as any} size={40} color="#ffffff" />
                 </View>
                 
                 <View style={styles.textContainer}>
-                  <Text style={styles.cardTitle}>{section.title}</Text>
-                  <Text style={styles.cardDescription}>{section.description}</Text>
+                  <Text style={styles.cardTitle}>{option.title}</Text>
                 </View>
 
                 <View style={styles.arrowContainer}>
@@ -195,18 +152,10 @@ const MarketScreen: React.FC<MarketScreenProps> = ({ onBack, onNavigateToSummary
             </LinearGradient>
           </TouchableOpacity>
         ))}
-
-        {/* Info Footer */}
-        <View style={styles.infoFooter}>
-          <Ionicons name="information-circle-outline" size={20} color="#7a8b9e" />
-          <Text style={styles.infoText}>
-            Cliquez sur une section pour voir les détails
-          </Text>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default MarketScreen;
+export default AccountScreen;
 

@@ -6,8 +6,12 @@ import MarketScreen from './screens/MarketScreen';
 import MarketSummaryScreen from './screens/MarketSummaryScreen';
 import Top5Screen from './screens/Top5Screen';
 import PalmaresScreen from './screens/PalmaresScreen';
+import ExceptionalExchangesScreen from './screens/ExceptionalExchangesScreen';
+import TickerScreen from './screens/TickerScreen';
+import AccountScreen from './screens/AccountScreen';
+import PortfolioScreen from './screens/PortfolioScreen';
 
-type Screen = 'login' | 'dashboard' | 'market' | 'market-summary' | 'top5' | 'palmares';
+type Screen = 'login' | 'dashboard' | 'market' | 'market-summary' | 'top5' | 'palmares' | 'exceptional-exchanges' | 'ticker' | 'account' | 'portfolio';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,6 +47,22 @@ export default function App() {
     setCurrentScreen('palmares');
   };
 
+  const navigateToExceptionalExchanges = () => {
+    setCurrentScreen('exceptional-exchanges');
+  };
+
+  const navigateToTicker = () => {
+    setCurrentScreen('ticker');
+  };
+
+  const navigateToAccount = () => {
+    setCurrentScreen('account');
+  };
+
+  const navigateToPortfolio = () => {
+    setCurrentScreen('portfolio');
+  };
+
   const renderScreen = () => {
     if (!isLoggedIn) {
       return <LoginScreen onLogin={handleLogin} />;
@@ -55,6 +75,7 @@ export default function App() {
             onBack={navigateToMarket} 
             onLogout={handleLogout}
             onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
           />
         );
       case 'top5':
@@ -63,6 +84,7 @@ export default function App() {
             onBack={navigateToMarket} 
             onLogout={handleLogout}
             onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
           />
         );
       case 'market-summary':
@@ -71,6 +93,44 @@ export default function App() {
             onBack={navigateToMarket} 
             onLogout={handleLogout}
             onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
+          />
+        );
+      case 'portfolio':
+        return (
+          <PortfolioScreen 
+            onBack={navigateToAccount} 
+            onLogout={handleLogout}
+            onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
+          />
+        );
+      case 'account':
+        return (
+          <AccountScreen 
+            onBack={navigateToDashboard} 
+            onLogout={handleLogout}
+            onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
+            onNavigateToPortfolio={navigateToPortfolio}
+          />
+        );
+      case 'ticker':
+        return (
+          <TickerScreen 
+            onBack={navigateToMarket} 
+            onLogout={handleLogout}
+            onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
+          />
+        );
+      case 'exceptional-exchanges':
+        return (
+          <ExceptionalExchangesScreen 
+            onBack={navigateToMarket} 
+            onLogout={handleLogout}
+            onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
           />
         );
       case 'market':
@@ -80,8 +140,11 @@ export default function App() {
             onNavigateToSummary={navigateToMarketSummary}
             onNavigateToTop5={navigateToTop5}
             onNavigateToPalmares={navigateToPalmares}
+            onNavigateToExceptionalExchanges={navigateToExceptionalExchanges}
+            onNavigateToTicker={navigateToTicker}
             onLogout={handleLogout}
             onNavigateToDashboard={navigateToDashboard}
+            onNavigateToAccount={navigateToAccount}
           />
         );
       case 'dashboard':
@@ -90,9 +153,17 @@ export default function App() {
           <DashboardScreen 
             onLogout={handleLogout} 
             onNavigateToMarket={navigateToMarket}
+            onNavigateToAccount={navigateToAccount}
           />
         );
     }
+  };
+
+  // Fonction pour passer onNavigateToAccount à tous les DrawerMenu
+  const drawerMenuProps = {
+    onNavigateToAccount: navigateToAccount,
+    onNavigateToDashboard: navigateToDashboard,
+    onNavigateToMarket: navigateToMarket,
   };
 
   return (
